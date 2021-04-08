@@ -4,6 +4,7 @@ import Event from '../services/event';
 import { Col, Gap, ImgIcon, Padder, RenderIf, Row } from '../shared';
 import Icons from '../assets/icons';
 import moment from 'moment'
+import _ from 'lodash';
 import { Confirm } from 'react-st-modal';
 
 
@@ -26,8 +27,12 @@ function List() {
 
   const getData = () => {
     const data = AppStore.todos.data || [];
-    setTodosDone(data.filter(x => x.done));
-    setTodosUndone(data.filter(x => !x.done));
+    setTodosDone(sortByCreatedAt(data.filter(x => x.done)));
+    setTodosUndone(sortByCreatedAt(data.filter(x => !x.done)));
+  }
+
+  const sortByCreatedAt = (data) => {
+    return _.sortBy(data, 'createdAt').reverse();
   }
 
   const source = () => {
@@ -40,8 +45,8 @@ function List() {
         done: !item.done,
         updatedAt: new Date(),
       });
-    await AppStore.todos.uploadIfOnline();
     _moveState(item);
+    await AppStore.todos.uploadIfOnline();
   }
 
   const remove = async (item) => {
@@ -72,7 +77,7 @@ function List() {
     _cur.done = !item.done;
     const currDestination = destination;
     currDestination.push(_cur);
-    setDestination(currDestination);
+    setDestination(sortByCreatedAt(currDestination));
   }
 
   return (
