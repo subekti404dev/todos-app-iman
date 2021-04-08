@@ -1,11 +1,11 @@
-# Todos App by Iman
+# Todos Web App by Iman
 ## Screenshot
 
 ![Todos App](https://media.giphy.com/media/rfnEa22Z6Vt8Y7mmYx/giphy.gif)
 ## How to Install
 ```bash
   # 1. clone this repo
-        git clone https://github.com/subekti404dev/todos-app-iman
+        git clone https://github.com/subekti404dev/todos-app-iman-web
   
   # 2. move into project directory
        cd todos-app-iman
