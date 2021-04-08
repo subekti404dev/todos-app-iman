@@ -35,13 +35,13 @@ function List() {
   }
 
   const doneUndone = async (item) => {
-    _moveState(item);
     await AppStore.todos.editItem(item._id,
       {
         done: !item.done,
         updatedAt: new Date(),
       });
     await AppStore.todos.uploadIfOnline();
+    _moveState(item);
   }
 
   const remove = async (item) => {
