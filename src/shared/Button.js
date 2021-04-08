@@ -1,4 +1,9 @@
 import React from 'react';
+import ReactLoading from 'react-loading';
+
+const Spinner = ({ color }) => (
+  <ReactLoading type={'spin'} color={color} height={30} width={30} />
+);
 
 const disableColor = 'rgb(138, 138, 138)';
 
@@ -14,10 +19,21 @@ const Block = (props) => {
     fontWeight: 'bold',
     fontSize: props.fontSize || 16,
     color: props.textColor || 'white',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   };
+  let children = props.loading ? <Spinner color={props.textColor || 'white'} /> : props.text;
+
   return (
-    <button className="btn" style={style} onClick={!props.disabled ? props.onClick : undefined}>{props.text}</button>
+    <button
+      className="btn"
+      style={style}
+      onClick={(!props.disabled && !props.loading) ? props.onClick : undefined}
+    >
+      {children}
+    </button>
   )
 }
 
@@ -33,10 +49,20 @@ const Bordered = (props) => {
     fontWeight: 'bold',
     fontSize: props.fontSize || 16,
     color,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   };
+  let children = props.loading ? <Spinner color={color} /> : props.text;
   return (
-    <button className="btn" style={style} onClick={!props.disabled ? props.onClick : undefined}>{props.text}</button>
+    <button
+      className="btn"
+      style={style}
+      onClick={(!props.disabled && !props.loading) ? props.onClick : undefined}
+    >
+      {children}
+    </button>
   )
 }
 

@@ -7,6 +7,7 @@ import Button from './Button';
 import ImgIcon from './ImgIcon';
 import Tag from './Tag';
 import RenderIf from './RenderIf';
+import Center from './Center';
 
 export {
   Col,
@@ -17,5 +18,6 @@ export {
   Button,
   ImgIcon,
   Tag,
-  RenderIf
+  RenderIf,
+  Center
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import './App.css';
-import Form from './components/Form';
 import { Padder } from './shared';
 import AppStore from './store/index';
-import { RenderIf } from './shared';
+import { RenderIf, Center, Gap } from './shared';
 import List from './components/List';
+import ReactLoading from 'react-loading';
+import Action from './components/Action';
 
 
 class App extends React.Component {
@@ -20,9 +21,23 @@ class App extends React.Component {
       <div>
         <RenderIf condition={this.state.dbInitialized} >
           <Padder vertical={30}>
-            <Form />
+            <Action />
             <List />
           </Padder>
+        </RenderIf>
+        <RenderIf condition={!this.state.dbInitialized}>
+          <Center>
+            <ReactLoading
+              type={'spin'}
+              color={'#3d2462'}
+              height={30}
+              width={30}
+            />
+            <Gap vertical />
+            <div style={{ fontWeight: 'bold' }} >
+              INITIALIZING DATABASE
+            </div>
+          </Center>
         </RenderIf>
       </div>
     );

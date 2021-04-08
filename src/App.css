@@ -1,3 +1,24 @@
+:root {
+  --st-modal-borderRadius: 0px;
+  --st-modal-boxShadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+
+  --st-modal-backgroundColor: #2a2a2a;
+  --st-modal-titleTextColor: #eeeeee;
+  --st-modal-secondColor: #3c3c3c;
+
+  --st-dialog-contentColor: #ffffff;
+
+  --st-modal-transformVisible: translate3d(-50%, -50%, 0) scale(1);
+  --st-modal-transformHidden: translate3d(-50%, -50%, 0) scale(0.1);
+
+  --st-button-primaryColor: #3d2462 !important;
+  --st-button-primaryTextColor: #000000;
+  --st-button-lightColor: rgb(194, 194, 194) !important;
+  --st-dialog-maxWidth: 400px !important;
+  --st-dialog-baseWidth: 75%
+
+}
+
 body {
  background-color: #f1f1f1;
  height: 100vh;
@@ -7,3 +28,11 @@ body {
  outline: 0;
  box-shadow: none !important;
 }
+
+button {
+  outline: 0;
+  box-shadow: none !important;
+  cursor: pointer;
+  /* border: 2px solid #3d2462 !important; */
+ }
+ 

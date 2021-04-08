@@ -1,14 +1,16 @@
 import React from 'react'
 import AppStore from '../store';
 import Event from '../services/event';
-import { Col, Gap, ImgIcon, Padder, Row } from '../shared';
+import { Col, Gap, ImgIcon, Padder, RenderIf, Row } from '../shared';
 import Icons from '../assets/icons';
+import moment from 'moment'
+import { Confirm } from 'react-st-modal';
+
 
 function List() {
   const [todosDone, setTodosDone] = React.useState([]);
   const [todosUndone, setTodosUndone] = React.useState([]);
   const [mode, setMode] = React.useState(0);
-  const [lastUpdate, setLastUpdate] = React.useState(new Date());
 
   React.useEffect(() => {
     getData();
@@ -26,23 +28,29 @@ function List() {
     const data = AppStore.todos.data || [];
     setTodosDone(data.filter(x => x.done));
     setTodosUndone(data.filter(x => !x.done));
-    setLastUpdate(new Date());
+  }
+
+  const source = () => {
+    return mode === 0 ? todosUndone : todosDone;
   }
 
   const doneUndone = async (item) => {
+    _moveState(item);
     await AppStore.todos.editItem(item._id,
       {
         done: !item.done,
         updatedAt: new Date(),
       });
     await AppStore.todos.uploadIfOnline();
-    _moveState(item);
   }
 
   const remove = async (item) => {
-    await AppStore.todos.deleteItem(item._id);
-    await AppStore.todos.uploadIfOnline();
-    _removeState(item);
+    const result = await Confirm(`Are you sure you want to remove this "${item.text}"`, 'Warning', 'Yes', 'No');
+    if (result) {
+      _removeState(item);
+      await AppStore.todos.deleteItem(item._id);
+      await AppStore.todos.uploadIfOnline();
+    }
   }
 
   const _removeState = (item) => {
@@ -71,14 +79,14 @@ function List() {
     <Row >
       <Col />
       <Col size={3}>
-        <Gap vertical size={40} />
+        <Gap vertical size={10} />
         <div
           style={{
             width: '100%',
             backgroundColor: 'white',
             borderBottomLeftRadius: 5,
             borderBottomRightRadius: 5,
-            minHeight: 200
+            // minHeight: 200
           }}>
           <Row>
             <Col
@@ -109,28 +117,45 @@ function List() {
             </Col>
           </Row>
           <Padder horizontal={10}>
-            {(mode === 0 ? todosUndone : todosDone).map((data, i) => {
+            {source().map((data, i) => {
+              const isLast = source().length === i + 1;
               return (
                 <div
-                  key={i + lastUpdate}
+                  key={i}
                   style={{
                     display: 'flex',
-                    borderBottom: `${1}px solid #dadada`,
-                    height: 50,
+                    borderBottom: `${isLast ? 0 : 1}px solid #dadada`,
+                    height: 60,
                     alignItems: 'center',
-                    cursor: 'pointer'
+                    padding: "10px 0",
                   }}>
                   <Row>
-                    <Col size={5} onClick={() => doneUndone(data)}>{data.text}</Col>
-                    <Col width={20} alignEnd>
+                    <Col onClick={() => doneUndone(data)} justifyCenter pointer>
+                      <Row>
+                        <Col>
+                          <div style={{ fontWeight: 'bold', fontSize: 20 }}>{data.text}</div>
+
+                          <div style={{ fontSize: 13, color: 'grey', display: 'flex', flexDirection: 'row' }}>{'Tags: '}<div style={{ fontStyle: 'italic', marginLeft: 5 }}>{data.tags.join(', ')}</div></div>
+                        </Col>
+                        <Col justifyCenter alignEnd>
+                          <div style={{ fontSize: 15, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('DD MMM YYYY')}</div>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col width={20} alignEnd justifyCenter pointer>
                       <div onClick={() => { remove(data) }}>
-                        <ImgIcon src={Icons.remove} size={15} />
+                        <ImgIcon src={Icons.remove} size={18} />
                       </div>
                     </Col>
                   </Row>
                 </div>
               )
             })}
+            <RenderIf condition={source().length === 0} >
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 150, fontWeight: 'bold' }}>
+                EMPTY
+              </div>
+            </RenderIf>
           </Padder>
         </div>
       </Col>
