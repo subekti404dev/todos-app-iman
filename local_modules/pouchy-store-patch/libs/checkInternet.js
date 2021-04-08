@@ -9,7 +9,8 @@ const checkInternet = (url) => {
     fetch(url, { method: 'HEAD' }).then(() => {
       clearTimeout(timer);
       resolve(true);
-    }).catch(() => {
+    }).catch((err) => {
+      console.log({err});
       clearTimeout(timer);
       reject(new Error('No internet connection'));
     });

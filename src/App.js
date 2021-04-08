@@ -17,7 +17,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="app-container">
+      <div>
         <RenderIf condition={this.state.dbInitialized} >
           <Padder vertical={30}>
             <Form />

@@ -1,7 +1,8 @@
 import React from 'react'
 import AppStore from '../store';
 import Event from '../services/event';
-import { Col, Gap, Padder, Row } from '../shared';
+import { Col, Gap, ImgIcon, Padder, Row } from '../shared';
+import Icons from '../assets/icons';
 
 function List() {
   const [todosDone, setTodosDone] = React.useState([]);
@@ -12,8 +13,10 @@ function List() {
   React.useEffect(() => {
     getData();
     Event.on('update-data', () => {
-      console.log('update-data');
       getData();
+    });
+    Event.on('move-to-undone', () => {
+      setMode(0)
     })
   },
     // eslint-disable-next-line 
@@ -32,8 +35,20 @@ function List() {
         done: !item.done,
         updatedAt: new Date(),
       });
-    await AppStore.todos.upload();
+    await AppStore.todos.uploadIfOnline();
     _moveState(item);
+  }
+
+  const remove = async (item) => {
+    await AppStore.todos.deleteItem(item._id);
+    await AppStore.todos.uploadIfOnline();
+    _removeState(item);
+  }
+
+  const _removeState = (item) => {
+    const source = item.done ? todosDone : todosUndone;
+    const setSource = item.done ? setTodosDone : setTodosUndone;
+    setSource(source.filter(x => x._id !== item._id));
   }
 
   const _moveState = (item) => {
@@ -98,7 +113,6 @@ function List() {
               return (
                 <div
                   key={i + lastUpdate}
-                  onClick={() => doneUndone(data)}
                   style={{
                     display: 'flex',
                     borderBottom: `${1}px solid #dadada`,
@@ -106,7 +120,14 @@ function List() {
                     alignItems: 'center',
                     cursor: 'pointer'
                   }}>
-                  {data.text}
+                  <Row>
+                    <Col size={5} onClick={() => doneUndone(data)}>{data.text}</Col>
+                    <Col width={20} alignEnd>
+                      <div onClick={() => { remove(data) }}>
+                        <ImgIcon src={Icons.remove} size={15} />
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
               )
             })}

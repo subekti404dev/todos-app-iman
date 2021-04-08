@@ -2,6 +2,7 @@ import React from 'react'
 
 const Col = ({
   children,
+  width,
   size,
   justifyStart,
   justifyCenter,
@@ -43,7 +44,10 @@ const Col = ({
   if (borderTopRightRadius) style.borderTopRightRadius = borderTopRightRadius;
   if (borderBottomLeftRadius) style.borderBottomLeftRadius = borderBottomLeftRadius;
   if (borderBottomRightRadius) style.borderBottomRightRadius = borderBottomRightRadius;
-
+  if (width) {
+    style.width = width;
+    delete style.flex;
+  }
   return (
     <div style={style} onClick={onClick}>
       {children}

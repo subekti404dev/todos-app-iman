@@ -253,7 +253,7 @@ export default class PouchyStore {
           this.dataMeta.unuploadeds[doc._id] = true;
           this.persistMeta();
         }
-        this.notifySubscribers([ doc ]);
+        this.notifySubscribers([doc]);
       }
     }).on('error', err => {
       console.e(`${this.name}.changes`, 'error', err);
@@ -314,12 +314,12 @@ export default class PouchyStore {
 
   /* manipulation of array data (non-single) */
 
-  async addItem(payload, user=null) {
+  async addItem(payload, user = null) {
     const id = this.dbLocal.createId();
     await this.addItemWithId(id, payload, user);
   }
 
-  async addItemWithId(id, payload, user={}) {
+  async addItemWithId(id, payload, user = {}) {
     const now = new Date().toJSON();
     const actionBy = this.createActionBy(user);
     await this.dbLocal.put({
@@ -333,7 +333,7 @@ export default class PouchyStore {
     });
   }
 
-  async editItem(id, payload, user={}) {
+  async editItem(id, payload, user = {}) {
     const now = new Date().toJSON();
     const actionBy = this.createActionBy(user);
     const doc = await this.dbLocal.getFailSafe(id);
@@ -349,7 +349,7 @@ export default class PouchyStore {
     });
   }
 
-  async deleteItem(id, user={}) {
+  async deleteItem(id, user = {}) {
     const now = new Date().toJSON();
     const actionBy = this.createActionBy(user);
     const doc = await this.dbLocal.getFailSafe(id);
@@ -382,7 +382,7 @@ export default class PouchyStore {
     user = { ...user };
     delete user._id;
     delete user._rev;
-    for (let name of [ 'created', 'updated', 'deleted', 'dirty' ]) {
+    for (let name of ['created', 'updated', 'deleted', 'dirty']) {
       delete user[`${name}At`];
       delete user[`${name}By`];
     }
@@ -448,5 +448,22 @@ export default class PouchyStore {
         console.e(err);
       }
     }
+  }
+
+  async isOnline() {
+    try {
+      await checkInternet(this.urlRemote);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  async uploadIfOnline() {
+    const isOnline = await this.isOnline();
+    if (isOnline) {
+      await this.upload()
+    }
+    return;
   }
 }

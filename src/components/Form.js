@@ -16,10 +16,11 @@ function Form() {
       updatedAt: new Date(),
       done: false,
     });
-    await AppStore.todos.upload();
+    await AppStore.todos.uploadIfOnline();
     setTodoText("");
     if (tagsRef) tagsRef.onClear();
     Event.emit('update-data');
+    Event.emit('move-to-undone');
   }
 
 
