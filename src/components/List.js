@@ -138,7 +138,8 @@ function List() {
                           <div style={{ fontSize: 13, color: 'grey', display: 'flex', flexDirection: 'row' }}>{'Tags: '}<div style={{ fontStyle: 'italic', marginLeft: 5 }}>{data.tags.join(', ')}</div></div>
                         </Col>
                         <Col justifyCenter alignEnd>
-                          <div style={{ fontSize: 15, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('DD MMM YYYY')}</div>
+                          <div style={{ fontSize: 13, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('DD MMM YYYY')}</div>
+                          <div style={{ fontSize: 12, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('HH:mm')}</div>
                         </Col>
                       </Row>
                     </Col>
