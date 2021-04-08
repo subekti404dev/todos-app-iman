@@ -1,6 +1,6 @@
 import React from 'react'
 import Tags from '../components/Tags';
-import { Row, Col, TextInput, Gap, Button, Padder } from '../shared';
+import { Col, TextInput, Gap, Button, Padder } from '../shared';
 import AppStore from '../store/index';
 import Event from '../services/event';
 import { useDialog } from 'react-st-modal';
