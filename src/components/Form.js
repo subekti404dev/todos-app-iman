@@ -24,7 +24,6 @@ function Form(props) {
     setTodoText("");
     if (tagsRef) tagsRef.onClear();
     await AppStore.todos.uploadIfOnline();
-    Event.emit('update-data');
     Event.emit('move-to-undone');
     setLoading(false);
     dialog.close();
