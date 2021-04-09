@@ -5,7 +5,7 @@
 ## How to Install
 ```bash
   # 1. clone this repo
-        git clone https://github.com/subekti404dev/todos-app-iman-web
+        git clone https://github.com/subekti404dev/todos-app-iman-web.git
   
   # 2. move into project directory
        cd todos-app-iman
