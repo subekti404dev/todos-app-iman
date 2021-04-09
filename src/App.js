@@ -35,7 +35,7 @@ class App extends React.Component {
             />
             <Gap vertical />
             <div style={{ fontWeight: 'bold' }} >
-              INITIALIZING DATABASE
+              {'INITIALIZING DATABASE'}
             </div>
           </Center>
         </RenderIf>

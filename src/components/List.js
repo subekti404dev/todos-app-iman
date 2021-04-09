@@ -127,25 +127,21 @@ function List() {
               return (
                 <div
                   key={i}
+                  className="list-item"
                   style={{
-                    display: 'flex',
                     borderBottom: `${isLast ? 0 : 1}px solid #dadada`,
-                    height: 60,
-                    alignItems: 'center',
-                    padding: "10px 0",
                   }}>
                   <Row>
                     <Col onClick={() => doneUndone(data)} justifyCenter pointer>
                       <Row>
                         <Col>
-                          <div style={{ fontWeight: 'bold', fontSize: 20 }}>{data.text}</div>
-
-                          <div style={{ fontSize: 13, color: 'grey', display: 'flex', flexDirection: 'row' }}>{'Tags: '}<div style={{ fontStyle: 'italic', marginLeft: 5 }}>{data.tags.join(', ')}</div></div>
+                          <div className="list-item-content">{data.text}</div>
+                          <div className="list-item-tags">{'Tags: '}<div style={{ fontStyle: 'italic', marginLeft: 5 }}>{data.tags.join(', ')}</div></div>
                         </Col>
-                        <Col justifyCenter alignEnd>
-                          <div style={{ fontSize: 13, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('DD MMM YYYY')}</div>
-                          <div style={{ fontSize: 12, color: 'grey', marginRight: 20 }}>{moment(data.createdAt).format('HH:mm')}</div>
-                        </Col>
+                        <div className="list-item-date-container">
+                          <div className="list-item-date">{moment(data.createdAt).format('DD MMM YYYY')}</div>
+                          <div className="list-item-time">{moment(data.createdAt).format('HH:mm')}</div>
+                        </div>
                       </Row>
                     </Col>
                     <Col width={20} alignEnd justifyCenter pointer>
@@ -158,7 +154,7 @@ function List() {
               )
             })}
             <RenderIf condition={source().length === 0} >
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 150, fontWeight: 'bold' }}>
+              <div className="list-empty-container">
                 EMPTY
               </div>
             </RenderIf>

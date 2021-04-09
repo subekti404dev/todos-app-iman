@@ -1,22 +1,21 @@
 :root {
-  --st-modal-borderRadius: 0px;
-  --st-modal-boxShadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+ --st-modal-borderRadius: 0px;
+ --st-modal-boxShadow: 0 10px 50px rgba(0, 0, 0, 0.8);
 
-  --st-modal-backgroundColor: #2a2a2a;
-  --st-modal-titleTextColor: #eeeeee;
-  --st-modal-secondColor: #3c3c3c;
+ --st-modal-backgroundColor: #2a2a2a;
+ --st-modal-titleTextColor: #eeeeee;
+ --st-modal-secondColor: #3c3c3c;
 
-  --st-dialog-contentColor: #ffffff;
+ --st-dialog-contentColor: #ffffff;
 
-  --st-modal-transformVisible: translate3d(-50%, -50%, 0) scale(1);
-  --st-modal-transformHidden: translate3d(-50%, -50%, 0) scale(0.1);
+ --st-modal-transformVisible: translate3d(-50%, -50%, 0) scale(1);
+ --st-modal-transformHidden: translate3d(-50%, -50%, 0) scale(0.1);
 
-  --st-button-primaryColor: #3d2462 !important;
-  --st-button-primaryTextColor: #000000;
-  --st-button-lightColor: rgb(194, 194, 194) !important;
-  --st-dialog-maxWidth: 400px !important;
-  --st-dialog-baseWidth: 75%
-
+ --st-button-primaryColor: #3d2462 !important;
+ --st-button-primaryTextColor: #000000;
+ --st-button-lightColor: rgb(194, 194, 194) !important;
+ --st-dialog-maxWidth: 400px !important;
+ --st-dialog-baseWidth: 75%;
 }
 
 body {
@@ -30,9 +29,56 @@ body {
 }
 
 button {
-  outline: 0;
-  box-shadow: none !important;
-  cursor: pointer;
-  /* border: 2px solid #3d2462 !important; */
- }
- 
+ outline: 0;
+ box-shadow: none !important;
+ cursor: pointer;
+ /* border: 2px solid #3d2462 !important; */
+}
+
+.list-item {
+ display: flex;
+ align-items: center;
+ padding: 10px 0;
+}
+
+.list-item-content {
+ font-weight: 500;
+ font-size: 17px;
+ line-height: 1;
+ padding-right: 5px;
+}
+
+.list-item-tags {
+ font-size: 12px;
+ color: grey;
+ display: flex;
+ flex-direction: row;
+ margin-top: 2px;
+}
+
+.list-item-date-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: flex-end;
+}
+
+.list-item-date {
+ font-size: 13px;
+ color: grey;
+ margin-right: 20px;
+}
+
+.list-item-time {
+ font-size: 12px;
+ color: grey;
+ margin-right: 20px;
+}
+
+.list-empty-container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 150px;
+ font-weight: bold;
+}
