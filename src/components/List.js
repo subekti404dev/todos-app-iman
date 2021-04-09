@@ -49,40 +49,16 @@ function List() {
         done: !item.done,
         updatedAt: new Date(),
       });
-    // _moveState(item);
     await AppStore.todos.uploadIfOnline();
   }
 
   const remove = async (item) => {
     const result = await Confirm(`Are you sure you want to remove this "${item.text}"`, 'Warning', 'Yes', 'No');
     if (result) {
-      // _removeState(item);
       await AppStore.todos.deleteItem(item._id);
       await AppStore.todos.uploadIfOnline();
     }
   }
-
-  // const _removeState = (item) => {
-  //   const source = item.done ? todosDone : todosUndone;
-  //   const setSource = item.done ? setTodosDone : setTodosUndone;
-  //   setSource(source.filter(x => x._id !== item._id));
-  // }
-
-  // const _moveState = (item) => {
-  //   const source = item.done ? todosDone : todosUndone;
-  //   const setSource = item.done ? setTodosDone : setTodosUndone;
-  //   const destination = !item.done ? todosDone : todosUndone;
-  //   const setDestination = !item.done ? setTodosDone : setTodosUndone;
-
-  //   const currSource = source.filter(x => x._id !== item._id);
-  //   setSource(currSource);
-
-  //   const _cur = item
-  //   _cur.done = !item.done;
-  //   const currDestination = destination;
-  //   currDestination.push(_cur);
-  //   setDestination(sortByCreatedAt(currDestination));
-  // }
 
   return (
     <Row >
