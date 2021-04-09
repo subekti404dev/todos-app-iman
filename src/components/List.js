@@ -11,6 +11,7 @@ import { Confirm } from 'react-st-modal';
 function List() {
   const [todosDone, setTodosDone] = React.useState([]);
   const [todosUndone, setTodosUndone] = React.useState([]);
+  const [unuploadeds, setUnuploadeds] = React.useState(0);
   const [mode, setMode] = React.useState(0);
 
   React.useEffect(() => {
@@ -31,6 +32,7 @@ function List() {
 
   const getData = () => {
     const data = AppStore.todos.data || [];
+    setUnuploadeds(AppStore.todos.countUnuploadeds());
     setTodosDone(sortByCreatedAt(data.filter(x => x.done)));
     setTodosUndone(sortByCreatedAt(data.filter(x => !x.done)));
   }
@@ -64,6 +66,10 @@ function List() {
     <Row >
       <Col />
       <Col size={3}>
+        <Gap vertical size={10} />
+        <RenderIf condition={unuploadeds > 0}>
+          <div style={{ fontStyle: 'italic', color: 'grey' }}>{`${unuploadeds} unuploaded changes`}</div>
+        </RenderIf>
         <Gap vertical size={10} />
         <div
           style={{
